@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nest-ip # Deployment의 이름 설정
+spec:
+  replicas: 2
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels: # Pod의 Label 설정
+      app: nest-ip
+  template:
+    metadata:
+      labels: # Template의 Label 설정
+        app: nest-ip
+    spec:
+      containers:
+        - image: archepro84/nest_ip
+          name: nest-ip-container
+          ports:
+            - containerPort: 3000
