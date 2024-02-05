@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nest-ip # Application 이름
+  namespace: argocd # Application을 생성할 Namespace
+spec:
+  destination:
+    namespace: nest-ip
+    server: https://kubernetes.default.svc
+  project: default # ArgoCD Project
+  source:
+    path: kubernetes/setup-argo-cd/manifest # 쿠버네티스 매니페스트의 경로 지정
+    repoURL: https://github.com/archepro84/prac-k8s.git # Git Repository 주소
+    targetRevision: HEAD # Git의 Head 기준으로 동기화
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true # Namespace가 없으면 생성
